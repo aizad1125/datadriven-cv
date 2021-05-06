@@ -1,0 +1,178 @@
+---
+title: Aizad Shafeez Resume
+author: Aizad Shafeez
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_resume:
+    css: ['css/custom_resume.css', 'css/styles.css', 'resume']
+    # set it to true for a self-contained HTML page but it'll take longer to render
+    self_contained: true
+
+---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+library(tidyverse)
+library(glue)
+
+# Set this to true to have links turned into footnotes at the end of the document
+PDF_EXPORT <- FALSE
+
+# Holds all the links that were inserted for placement at the end
+links <- c()
+
+source('parsing_functions.R')
+
+
+# First let's get the data, filtering to only the items tagged as
+# Resume items
+position_data <- read_csv2('mypositions.csv') %>% 
+  filter(in_resume) %>% 
+  mutate(
+    # Build some custom sections by collapsing others
+    section = case_when(
+      section %in% c('research_positions', 'industry_positions') ~ 'positions', 
+      section %in% c('data_science_writings', 'by_me_press') ~ 'writings',
+      TRUE ~ section
+    )
+  )  
+
+```
+
+
+Aside
+================================================================================
+
+
+![logo](me2.jpg){width=100%}
+
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+
+
+- <i class="fa fa-envelope"></i> aizad1125@gmail.com
+- <i class="fa fa-twitter"></i> [/aizadshafeez <i class="fa fa-external-link-alt fa-xs"></i>](https://twitter.com/aizadshafeez)
+- <i class="fa fa-github"></i> [/aizad1125 <i class="fa fa-external-link-alt fa-xs"></i>](https://github.com/aizad1125)
+- <i class="fab fa-linkedin-in"></i> [/aizad shafeez <i class="fa fa-external-link-alt fa-xs"></i>](https://www.linkedin.com/in/aizad-tazhi-7b9a7615)
+- <i class="fa fa-phone"></i> +6018 229 3299
+
+
+
+Competencies {#skills}
+--------------------------------------------------------------------------------
+
+
+**Programming Skills :**
+  
+- **Data Manipulation**
+  - R
+  - SQL (Experienced with MySQL and Presto)
+  - Excel/Google Sheet (advanced)
+  - Python (basic)
+  
+- **Visualisation**
+  - ggplot2
+  - Tableau, Holistics
+
+  
+- **Reporting**
+  - Powerpoint
+  - Rmarkdown
+
+
+<!-- **Scientifiques :** -->
+
+<!-- - Statistiques -->
+<!--   - Régression -->
+<!--   - Classification -->
+<!--   - Plan d'experience -->
+
+<!-- - Biotechnologies -->
+<!--   - Techniques de Diagnostic *In Vitro* -->
+<!--   - Production de protéines recombinantes -->
+<!--   - Génétique -->
+  
+
+
+
+
+
+
+<!-- Contributions Open Source {#open-source} -->
+<!-- -------------------------------------------------------------------------------- -->
+
+<!-- All projects available at `github.com/felixmil/` -->
+
+
+<!-- - `shinysense`: R package to use sensor data in Shiny apps -->
+<!-- - `tuftesque`: Hugo theme (behind LiveFreeOrDichotomize.com) -->
+<!-- - `slid3r`: D3 add-on for fully svg slider inputs -->
+
+
+Reference {#more-info}
+--------------------------------------------------------------------------------
+ - **Joshua Smith** 
+ - Former Head of Product at TheLorry
+ - +6017 342 0811
+ - josh@dapat.com </br>
+ </br>
+ - **Amir Husaini**
+ - Business Analsyt at Jirnexu
+ - +6013 532 1197
+ - amir.husaini@jirnexu.com
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+
+Document generated in R <br>{pagedown} - [code <i class="fa fa-external-link-alt fa-xs"></i>](https://github.com/felixmil/cv) 
+
+<br>
+Date Updated `r Sys.Date()`.
+
+
+Main
+================================================================================
+
+Aizad Shafeez {#title}
+--------------------------------------------------------------------------------
+
+```{r}
+intro_text <- "I love simplifying the complicated to make life better. I am determined and hard to quit, but realistic enough to know when to look at more viable possibilities. I have a keen eye for details and believe that the best decisions are often times supported by data, but driven by intuition. I strive for productivity and efficiency in my own and my teammates’ workflow, as work that is even only 1% faster speed will create exponential time and cost saving in the long run.
+"
+
+
+cat(sanitize_links(intro_text))
+```
+
+
+
+Professional & Work Experience {data-icon=suitcase}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('positions')
+```
+
+
+<!-- Projets {data-icon=newspaper} -->
+<!-- -------------------------------------------------------------------------------- -->
+
+```{r}
+# position_data %>% print_section('project')
+```
+
+
+Official Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('education')
+```
+
+
+
